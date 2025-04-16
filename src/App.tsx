@@ -1,15 +1,39 @@
 import CourseGoal from "./components/CourseGoal";
 import goalsImg from "./assets/goals.jpg";
 import Header from "./components/Header";
+import {useState} from "react";
+import CourseGoalList from "./components/CourseGoalList";
+export interface CourseGoal {
+  id: number;
+  title: string;
+  description: string;
+}
 export default function App() {
+  const [goals, setGoals] = useState<CourseGoal[]>([]);
+
+  function handleAddGoal() {
+    const newGoal: CourseGoal = {
+      id: Math.random(),
+      title: "New Goal",
+      description: "This is a new goal",
+    };
+    setGoals((prevGoals) => {
+      return [...prevGoals, newGoal];
+    });
+  }
+
+  function handleDeleteGoal(id: number) {
+    console.log(`goal with id ${id} removed!`);
+    setGoals((prevGoals) => prevGoals.filter((goal) => goal.id !== id));
+  }
+
   return (
     <main>
       <Header image={{src: goalsImg, alt: "goals"}}>
         <h1>Your Course Goals</h1>
       </Header>
-      <CourseGoal title="Learn React">
-        <p>Learn it from ground up</p>
-      </CourseGoal>
+      <button onClick={handleAddGoal}>Add Goal</button>
+      <CourseGoalList goals={goals} onDeleteCourse={handleDeleteGoal} />
     </main>
   );
 }
