@@ -1,3 +1,9 @@
+import CourseGoal from "./components/CourseGoal";
+
 export default function App() {
-  return <div>App</div>;
+  return (
+    <main>
+      <CourseGoal title="Learn React" description="Master React" />
+    </main>
+  );
 }
